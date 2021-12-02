@@ -18,3 +18,6 @@ data = Utils.ReadCSVFile("indata/yellow_tripdata_2021-01.csv", taxi_cols)
 data.info()
 zone_lookup = Utils.ReadCSVFile("indata/taxi+_zone_lookup.csv", zone_cols)
 zone_lookup.info()
+
+
+data['tpep_pickup_datetime']=pd.to_datetime(data['tpep_pickup_datetime'],format="%Y/%m/%d %H:%M:%S")
