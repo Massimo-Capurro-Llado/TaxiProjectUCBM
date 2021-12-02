@@ -21,3 +21,7 @@ zone_lookup.info()
 
 
 data['tpep_pickup_datetime']=pd.to_datetime(data['tpep_pickup_datetime'],format="%Y/%m/%d %H:%M:%S")
+
+
+
+numero_corse=data.shape[0]
