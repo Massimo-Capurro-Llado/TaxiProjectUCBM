@@ -53,4 +53,15 @@ def ReadCSVFile(file, columns):
         print(e)
         sys.exit()
 
-
+def ViaggiPerGiorno(big_frame,parser):
+    date = pd.to_datetime(big_frame['tpep_pickup_datetime'],format='%Y%m%d %H:%M:%S')
+    date = date.to_frame()
+    date['month'] = date['tpep_pickup_datetime'].dt.month
+    l = []
+    for i in parser.month:
+        giorni_ok=date['month']==int(i)
+        giorni_ok= date[giorni_ok]
+        date['day'] = date['tpep_pickup_datetime'].dt.day
+        giorni_del_mese = max(date['day'])
+        l.append(round(giorni_ok.shape[0]/giorni_del_mese))
+    return l

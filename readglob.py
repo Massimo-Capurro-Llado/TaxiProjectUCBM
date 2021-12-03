@@ -12,7 +12,7 @@ def read_multiple_file(parser):#da risolvere problema mese,borough
     taxi_cols=['tpep_pickup_datetime','PULocationID']
     dfs = []
     for i in parser.month:
-        dfs.append(Utils.ReadCSVFile(filenames[int(i)], taxi_cols))
+        dfs.append(Utils.ReadCSVFile(filenames[int(i)-1], taxi_cols))
     
     # Concatenate all data into one DataFrame
     big_frame = pd.concat(dfs, ignore_index=True)
