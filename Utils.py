@@ -22,7 +22,7 @@ def initializeParser():
     parser.add_argument("-i2", "--month",
                         help="The months to put under analysis",
                         type=list,
-                        default='1234')
+                        default='12345')
     
     parser.add_argument("-i3", "--year",
                         help="The year to put under analysis",
