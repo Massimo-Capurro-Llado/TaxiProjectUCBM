@@ -44,7 +44,7 @@ def initializeParser():
 
 #Function to read only desired columns of CSV file
 
-def ReadCSVFile(file, columns):
+def readCSVFile(file, columns):
     try:
         csvfile= open(file)
         data = pd.read_csv(csvfile, usecols=columns)
@@ -52,21 +52,3 @@ def ReadCSVFile(file, columns):
     except OSError as e:
         print(e)
         sys.exit()
-
-def ViaggiPerGiorno(big_frame,parser):
-    date = pd.to_datetime(big_frame['tpep_pickup_datetime'],format='%Y%m%d %H:%M:%S')
-    date = date.to_frame()
-    date['month'] = date['tpep_pickup_datetime'].dt.month
-    l = []
-    for i in parser.month:
-        giorni_ok=date['month']==int(i)
-        giorni_ok= date[giorni_ok]
-        date['day'] = date['tpep_pickup_datetime'].dt.day
-        giorni_del_mese = max(date['day'])
-        l.append(round(giorni_ok.shape[0]/giorni_del_mese))
-    return l
-
-def periodopiùfrequente(l):
-    periodo = l.index(max(l))+1
-    return periodo
-    
