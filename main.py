@@ -9,6 +9,7 @@ import Utils
 import pandas as pd
 #import multiprocessing as mp
 import time
+import readglob as rg
 
 start = time.time()
 
@@ -16,27 +17,7 @@ start = time.time()
 taxi_cols=['tpep_pickup_datetime', 'PULocationID']
 zone_cols=['LocationID', 'Borough']
 parser= Utils.initializeParser()
-
-
-#Funzione che si occupa della lettura di piu file e dell'esecuzione del programma
-#TODO: Provare a leggere i file e metterli tutti in un unico dataframe
-def ReadMultipleFiles(parser):
-
-    for i in parser.month:
-        month_data = Utils.ReadCSVFile(parser.path + f'/yellow_tripdata_{parser.year}-0{i}.csv', taxi_cols)
-        month_data['tpep_pickup_datetime']=pd.to_datetime(month_data['tpep_pickup_datetime'],format="%Y/%m/%d %H:%M:%S")
-        numero_corse=month_data.shape[0]
-        print(numero_corse)
-        
-    zone_lookup = Utils.ReadCSVFile("indata/taxi+_zone_lookup.csv", zone_cols)
-    zone_lookup.info()
-
-ReadMultipleFiles(parser)
-
-# =============================================================================
-# with mp.Pool() as pool:
-#     pool.map(ReadMultipleFiles,  parser)            
-# =============================================================================
+big_frame = rg.read_multiple_file(parser)
 
 end = time.time()
 print(end - start)

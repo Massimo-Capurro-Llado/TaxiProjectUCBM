@@ -22,7 +22,7 @@ def initializeParser():
     parser.add_argument("-i2", "--month",
                         help="The months to put under analysis",
                         type=list,
-                        default='12345')
+                        default='123')
     
     parser.add_argument("-i3", "--year",
                         help="The year to put under analysis",
@@ -43,6 +43,7 @@ def initializeParser():
 
 
 #Function to read only desired columns of CSV file
+
 def ReadCSVFile(file, columns):
     try:
         csvfile= open(file)
@@ -51,3 +52,5 @@ def ReadCSVFile(file, columns):
     except OSError as e:
         print(e)
         sys.exit()
+
+
