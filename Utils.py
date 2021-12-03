@@ -32,7 +32,12 @@ def initializeParser():
     parser.add_argument("-i4", "--zone",
                         help="The zone_lookup file with information about the Borough",
                         type=str,
-                        default='indata/taxi+_zone_lookup.csv')
+                        default='Specifiche/taxi+_zone_lookup.csv')
+    
+    parser.add_argument("-i5", "--borough",
+                        help="The zone_lookup file with information about the Borough",
+                        type=list,
+                        default=['Manhattan'])
     
     parser.add_argument("-e", "--extension",
                         help="Input file extension, including dot (Es -> .csv)",

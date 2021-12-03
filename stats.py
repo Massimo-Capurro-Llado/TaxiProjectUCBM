@@ -13,7 +13,10 @@ zone_cols=['LocationID', 'Borough']
 
 #TODO: Integrate Borough
 def statistics(parser):
-
+    zone_lookup = Utils.readCSVFile(parser.zone, zone_cols)
+    correct_borough = zone_lookup['Borough'].isin(parser.borough)
+    id_list = zone_lookup[correct_borough]['LocationID'].tolist()
+    print(id_list)
     result=[]
     for i in parser.month:
         month_data = Utils.readCSVFile(parser.path + f'/yellow_tripdata_{parser.year}-0{i}.csv', taxi_cols)
@@ -25,8 +28,7 @@ def statistics(parser):
         period = result.index(max(result))+1
         
         
-    zone_lookup = Utils.readCSVFile("Specifiche/taxi+_zone_lookup.csv", zone_cols)
-    zone_lookup.info()
+   
     
     return result, period
 
