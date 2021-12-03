@@ -22,7 +22,7 @@ def initializeParser():
     parser.add_argument("-i2", "--month",
                         help="The months to put under analysis",
                         type=list,
-                        default='123')
+                        default='123456')
     
     parser.add_argument("-i3", "--year",
                         help="The year to put under analysis",
@@ -65,3 +65,8 @@ def ViaggiPerGiorno(big_frame,parser):
         giorni_del_mese = max(date['day'])
         l.append(round(giorni_ok.shape[0]/giorni_del_mese))
     return l
+
+def periodopiùfrequente(l):
+    periodo = l.index(max(l))+1
+    return periodo
+    
