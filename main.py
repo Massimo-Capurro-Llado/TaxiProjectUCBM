@@ -13,7 +13,8 @@ start = time.time()
 
 parser= Utils.initializeParser()
 
-result, period= stats.statistics(parser)
+result, period, result_borough= stats.statistics(parser)
+
 
 end = time.time()
 print(end - start)
