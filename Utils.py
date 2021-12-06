@@ -37,7 +37,7 @@ def initializeParser():
     parser.add_argument("-i5", "--borough",
                         help="The zone_lookup file with information about the Borough",
                         type=list,
-                        default=['Manhattan'])
+                        default=['Manhattan','Queens','EWR','Bronx','Staten Island','Brooklyn'])
     
     parser.add_argument("-e", "--extension",
                         help="Input file extension, including dot (Es -> .csv)",
@@ -57,3 +57,4 @@ def readCSVFile(file, columns):
     except OSError as e:
         print(e)
         sys.exit()
+
