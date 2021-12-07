@@ -16,7 +16,7 @@ parser= Utils.initializeParser()
 #result, period, result_borough= stats.statistics(parser)
 month_data, giorni_del_mese = stats.statistics_per_month(parser)
 mean_trip_per_borough, borough_data = stats.stats_per_borough(parser, month_data, giorni_del_mese)
-a = stats.grafica_mese(mean_trip_per_borough)
+histogram,pie = stats.grafica_mese(mean_trip_per_borough)
 end = time.time()
 print(end - start)
 

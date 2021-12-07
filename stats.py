@@ -54,5 +54,21 @@ def stats_per_borough(parser,month_data,giorni_del_mese):
     return mean_trip_per_borough, borough_data
 
 def grafica_mese(mean_trip_per_borough):
-    a = plt.bar(mean_trip_per_borough.keys(), mean_trip_per_borough.values(), color='g')
-    return a
+    # histogram
+       histogram = plt.bar(mean_trip_per_borough.keys(), mean_trip_per_borough.values(), color='g')
+    # Pie 
+       plt.figure(figsize=(15,15))
+       plt.style.use('ggplot')
+       labels = []
+       sizes = [] 
+       explode= (.4, .12, .12, .12, .0, .12)
+       for x, y in mean_trip_per_borough.items():
+            labels.append(x)
+            sizes.append(y)
+       # Plot
+       pie=plt.pie(sizes, labels=labels, explode=explode, pctdistance=0.20, autopct='%.2f %%')
+       plt.legend(title = "Borough:")
+       
+       return histogram,pie
+   
+    # ,colors='#abcdef', autopct='%.2f %%'
