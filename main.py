@@ -5,18 +5,34 @@ Created on Wed Nov 24 10:19:00 2021
           francescocarpineti091299 : Francesco Carpineti 
           Vadilonga00 : Francesca Vadilonga
 """
+
 import Utils
 import time
-import stats 
+from queue import Queue 
+from StatsExtractor import StatsExtractor
+from Result import Result
 
-start = time.time()
+if __name__ == '__main__':
+    
+    start = time.time()
+    
+    parser = Utils.initializeParser()
+    result = Result()
 
-parser= Utils.initializeParser()
+    fileList = Utils.get_files_list(parser)
+    queue = Queue()
 
-#result, period, result_borough= stats.statistics(parser)
-month_data, giorni_del_mese = stats.statistics_per_month(parser)
-mean_trip_per_borough, borough_data = stats.stats_per_borough(parser, month_data, giorni_del_mese)
-histogram,pie = stats.grafica_mese(mean_trip_per_borough)
-end = time.time()
-print(end - start)
+    for f in fileList:
+        statsExtractor = StatsExtractor(queue)
+        statsExtractor.start()
+        queue.put((parser, f, fileList[f], result))
 
+    queue.join()
+
+# TODO add graph generation for every borough
+# =============================================================================
+# mean_trip_per_borough, borough_data = stats.stats_per_borough(parser, month_data, giorni_del_mese)
+# histogram,pie = stats.grafica_mese(mean_trip_per_borough)
+# =============================================================================
+    end = time.time()
+    print(f'Task executed in : {end-start} s')

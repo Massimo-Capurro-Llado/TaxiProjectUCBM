@@ -13,48 +13,59 @@ import argparse
 
 def initializeParser():
     parser = argparse.ArgumentParser()
-    
+
     parser.add_argument("-i1", "--path",
                         help="Path of the directory where the files are",
                         type=str,
                         default='./indata')
-    
+
     parser.add_argument("-i2", "--month",
                         help="The months to put under analysis",
                         type=list,
                         default='123456')
-    
+
     parser.add_argument("-i3", "--year",
                         help="The year to put under analysis",
                         type=int,
                         default="2021")
-    
+
     parser.add_argument("-i4", "--zone",
                         help="The zone_lookup file with information about the Borough",
                         type=str,
                         default='Specifiche/taxi+_zone_lookup.csv')
-    
+
     parser.add_argument("-i5", "--borough",
                         help="The zone_lookup file with information about the Borough",
                         type=list,
-                        default=['Manhattan','Queens','EWR','Bronx','Staten Island','Brooklyn'])
-    
+                        default=['Manhattan', 'Queens', 'EWR', 'Bronx', 'Staten Island', 'Brooklyn'])
+
     parser.add_argument("-e", "--extension",
                         help="Input file extension, including dot (Es -> .csv)",
                         type=str,
                         default='.csv')
-    
+
     return parser.parse_args()
 
 
-#Function to read only desired columns of CSV file
+# This function reads the csv files of taxi trips and Borough and merges teh useful data into a dataframe
 
-def readCSVFile(file, columns):
+def read_csv(file, zone):
     try:
-        csvfile= open(file)
-        data = pd.read_csv(csvfile, usecols=columns)
-        return data
+        taxi_data = pd.read_csv(file, usecols=['tpep_pickup_datetime', 'PULocationID'])
+        zone_lookup = pd.read_csv(zone, usecols=['LocationID', 'Borough'])
+        return pd.merge(taxi_data, zone_lookup, left_on='PULocationID', right_on='LocationID')
     except OSError as e:
         print(e)
         sys.exit()
 
+# This function creates a dictionary of (key:month, value: name of the month related file)
+
+def get_files_list(parser):
+    fileList = {}
+    for m in parser.month:
+        n = str(m).zfill(2)
+        fileList[m] = parser.path + f'/yellow_tripdata_{parser.year}-{n}.csv'
+    return fileList
+
+#TODO: Add a datacleaner function to get rid of usless values of the result dataframe (for ex. no sense year information
+# (2029) or Unknown values for Borough)
