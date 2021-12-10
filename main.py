@@ -5,6 +5,7 @@ Created on Wed Nov 24 10:19:00 2021
           francescocarpineti091299 : Francesco Carpineti 
           Vadilonga00 : Francesca Vadilonga
 """
+import pandas as pd
 
 import Utils
 import time
@@ -28,6 +29,8 @@ if __name__ == '__main__':
         queue.put((parser, f, fileList[f], result))
 
     queue.join()
+    #df_result=pd.DataFrame(result.result)
+    #print(df_result)
 
 # TODO add graph generation for every borough
 # =============================================================================

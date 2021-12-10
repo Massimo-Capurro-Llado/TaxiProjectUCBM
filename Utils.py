@@ -67,5 +67,10 @@ def get_files_list(parser):
         fileList[m] = parser.path + f'/yellow_tripdata_{parser.year}-{n}.csv'
     return fileList
 
-#TODO: Add a datacleaner function to get rid of usless values of the result dataframe (for ex. no sense year information
-# (2029) or Unknown values for Borough)
+def data_cleaner(month_data,parser,month):
+    #take the first coloum of month_data dataframe named ['tpep_pickup_datatime']
+    month_data.iloc[:,0] = pd.to_datetime(month_data.iloc[:,0], format="%Y/%m/%d %H:%M:%S")
+    month_data.dropna(axis=0, how='any')
+    month_data=month_data.loc[(month_data.iloc[:,0].dt.year == parser.year) & (month_data.iloc[:,0].dt.month == int(month))]
+    days = max(month_data.iloc[:,0].dt.day)
+    return days

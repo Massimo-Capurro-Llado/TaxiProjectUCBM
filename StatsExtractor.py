@@ -24,8 +24,8 @@ class StatsExtractor(Thread):
         parser, month, file, result = self.queue.get()
         print('Thread started')
         month_data = Utils.read_csv(file, parser.zone)
-        month_data['tpep_pickup_datetime'] = pd.to_datetime(month_data['tpep_pickup_datetime'], format="%Y/%m/%d %H:%M:%S")
-        days = max(month_data['tpep_pickup_datetime'].dt.day)
+        days= Utils.data_cleaner(month_data,parser,month)
+
 
         mean_borough_trips = {}
         for i in parser.borough:
