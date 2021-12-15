@@ -26,7 +26,7 @@ if __name__ == '__main__':
     
     start = time.time()
     
-    parser = Utils.initializeParser()
+    parser = Utils.initialize_parser()
     result = Result()
 
     file_list = Utils.get_files_list(parser)
