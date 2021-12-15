@@ -9,9 +9,10 @@ Created on Wed Nov 24 11:06:08 2021
 import pandas as pd
 import sys
 import argparse
+from os import path
 
 
-def initializeParser():
+def initialize_parser():
     parser = argparse.ArgumentParser()
 
     parser.add_argument("-i1", "--path",
@@ -21,8 +22,9 @@ def initializeParser():
 
     parser.add_argument("-i2", "--month",
                         help="The months to put under analysis",
+                        nargs='+',
                         type=list,
-                        default='123456')
+                        default=[1, 2, 3, 4, 5, 6])
 
     parser.add_argument("-i3", "--year",
                         help="The year to put under analysis",
@@ -39,10 +41,10 @@ def initializeParser():
                         type=list,
                         default=['Manhattan', 'Queens', 'EWR', 'Bronx', 'Staten Island', 'Brooklyn'])
 
-    parser.add_argument("-e", "--extension",
-                        help="Input file extension, including dot (Es -> .csv)",
+    parser.add_argument("-o", "--output",
+                        help="The folder for output results",
                         type=str,
-                        default='.csv')
+                        default='./outdata')
 
     return parser.parse_args()
 
@@ -60,6 +62,7 @@ def read_csv(file, zone):
 
 # This function creates a dictionary of (key:month, value: name of the month related file)
 
+
 def get_files_list(parser):
     fileList = {}
     for m in parser.month:
@@ -67,10 +70,35 @@ def get_files_list(parser):
         fileList[m] = parser.path + f'/yellow_tripdata_{parser.year}-{n}.csv'
     return fileList
 
+
 def data_cleaner(month_data,parser,month):
     #take the first coloum of month_data dataframe named ['tpep_pickup_datatime']
-    month_data.iloc[:,0] = pd.to_datetime(month_data.iloc[:,0], format="%Y/%m/%d %H:%M:%S")
+    month_data.iloc[:, 0] = pd.to_datetime(month_data.iloc[:, 0], format="%Y/%m/%d %H:%M:%S")
     month_data.dropna(axis=0, how='any')
-    month_data=month_data.loc[(month_data.iloc[:,0].dt.year == parser.year) & (month_data.iloc[:,0].dt.month == int(month))]
-    days = max(month_data.iloc[:,0].dt.day)
+    month_data = month_data.loc[(month_data.iloc[:, 0].dt.year == parser.year) & (month_data.iloc[:, 0].dt.month == int(month))]
+    days = max(month_data.iloc[:, 0].dt.day)
     return days
+
+def generate_graphs(stats, parser):
+    stats_df = pd.DataFrame(stats).sort_index()
+    for i in parser.month:
+        current_month = stats_df.loc[i, :]
+        fig = current_month.plot.bar()
+        fig.figure.savefig(path.join(parser.output, f"Bar_month-{i}.png"))
+
+
+#Possible implementation for drawing pie graphs
+
+# plt.figure(figsize=(15, 15))
+        # plt.style.use('ggplot')
+        # labels = []
+        # sizes = []
+        # explode = (.4, .12, .12, .12, .0, .12)
+        # for x, y in current_month.items():
+        #     labels.append(x)
+        #     sizes.append(y)
+        # # Plot
+        # ax.pie(sizes, labels=labels, explode=explode, pctdistance=0.20, autopct='%.2f %%')
+        # ax.legend(title="Borough:")
+        # fig.savefig(path.join(parser.output, f"pie_Borough-{borough}.png"))
+

@@ -5,13 +5,22 @@ Created on Wed Nov 24 10:19:00 2021
           francescocarpineti091299 : Francesco Carpineti 
           Vadilonga00 : Francesca Vadilonga
 """
-import pandas as pd
 
 import Utils
 import time
 from queue import Queue 
 from StatsExtractor import StatsExtractor
 from Result import Result
+
+
+def stats_extractor(file_list):
+    queue = Queue()
+    for f in file_list:
+        extractor = StatsExtractor(queue)
+        extractor.start()
+        queue.put((parser, f, file_list[f], result))
+    queue.join()
+
 
 if __name__ == '__main__':
     
@@ -20,22 +29,9 @@ if __name__ == '__main__':
     parser = Utils.initializeParser()
     result = Result()
 
-    fileList = Utils.get_files_list(parser)
-    queue = Queue()
-
-    for f in fileList:
-        statsExtractor = StatsExtractor(queue)
-        statsExtractor.start()
-        queue.put((parser, f, fileList[f], result))
-
-    queue.join()
-    #df_result=pd.DataFrame(result.result)
-    #print(df_result)
-
-# TODO add graph generation for every borough
-# =============================================================================
-# mean_trip_per_borough, borough_data = stats.stats_per_borough(parser, month_data, giorni_del_mese)
-# histogram,pie = stats.grafica_mese(mean_trip_per_borough)
-# =============================================================================
+    file_list = Utils.get_files_list(parser)
+    stats_extractor(file_list)
+    Utils.generate_graphs(result.result, parser)
+    #TODO salva risultato in excel(Fare funzione EXCEL)
     end = time.time()
     print(f'Task executed in : {end-start} s')
