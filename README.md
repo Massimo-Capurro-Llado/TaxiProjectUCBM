@@ -10,7 +10,9 @@ Code that analyzes the average number of daily taxi trips in new york according 
 # How to get started
 
 ## Before Execution
+-Put the data sets inside the 'indata' folder, otherwise specify the path with the -i1 option.
 
+-Put taxi+_zone_lookup.csv inside the 'Specifiche' folder.
 ## To execute
 
 # How to contribute
