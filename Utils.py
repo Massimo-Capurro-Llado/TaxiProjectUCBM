@@ -37,7 +37,8 @@ def initialize_parser():
 
     parser.add_argument("-i4", "--borough",
                         help="The zone_lookup file with information about the Borough",
-                        type=list,
+                        type=str,
+                        nargs='+',
                         default=['Manhattan', 'Queens', 'EWR', 'Bronx', 'Staten Island', 'Brooklyn'])
 
     parser.add_argument("-o", "--output",
