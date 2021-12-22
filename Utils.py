@@ -15,6 +15,10 @@ from os import path
 def initialize_parser():
     parser = argparse.ArgumentParser()
 
+    parser.add_argument("year",
+                         help="The year to put under analysis",
+                         type=int)
+
     parser.add_argument("-i1", "--path",
                         help="Path of the directory where the files are",
                         type=str,
@@ -23,20 +27,15 @@ def initialize_parser():
     parser.add_argument("-i2", "--month",
                         help="The months to put under analysis",
                         nargs='+',
-                        type=list,
+                        type=str,
                         default=[1, 2, 3, 4, 5, 6])
 
-    parser.add_argument("-i3", "--year",
-                        help="The year to put under analysis",
-                        type=int,
-                        default="2021")
-
-    parser.add_argument("-i4", "--zone",
+    parser.add_argument("-i3", "--zone",
                         help="The zone_lookup file with information about the Borough",
                         type=str,
                         default='Specifiche/taxi+_zone_lookup.csv')
 
-    parser.add_argument("-i5", "--borough",
+    parser.add_argument("-i4", "--borough",
                         help="The zone_lookup file with information about the Borough",
                         type=list,
                         default=['Manhattan', 'Queens', 'EWR', 'Bronx', 'Staten Island', 'Brooklyn'])
