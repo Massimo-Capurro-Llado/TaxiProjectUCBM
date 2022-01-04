@@ -7,9 +7,11 @@ Created on Wed Nov 24 11:06:08 2021
 """
 
 import pandas as pd
+import matplotlib.pyplot as plt
 import sys
 import argparse
 from os import path
+
 
 
 def initialize_parser():
@@ -83,22 +85,9 @@ def generate_graphs(stats, parser):
     stats_df = pd.DataFrame(stats).sort_index()
     for i in parser.month:
         current_month = stats_df.loc[i, :]
-        fig = current_month.plot.bar()
-        fig.figure.savefig(path.join(parser.output, f"Bar_month-{i}.png"))
-
-
-#Possible implementation for drawing pie graphs
-
-# plt.figure(figsize=(15, 15))
-        # plt.style.use('ggplot')
-        # labels = []
-        # sizes = []
-        # explode = (.4, .12, .12, .12, .0, .12)
-        # for x, y in current_month.items():
-        #     labels.append(x)
-        #     sizes.append(y)
-        # # Plot
-        # ax.pie(sizes, labels=labels, explode=explode, pctdistance=0.20, autopct='%.2f %%')
-        # ax.legend(title="Borough:")
-        # fig.savefig(path.join(parser.output, f"pie_Borough-{borough}.png"))
+        barplot = current_month.plot(kind='bar', title ="DAILY TAXI TRIPS IN NEW YORK'S BOROUGHS", fontsize=9)
+        barplot.set_xlabel("BOROUGH", fontsize=10)
+        barplot.set_ylabel("AVERAGE DAILY TRIPS", fontsize=10)
+        plt.tight_layout()
+        plt.savefig(path.join(parser.output, f"Bar_month-{i}.png"), dpi=300)
 
