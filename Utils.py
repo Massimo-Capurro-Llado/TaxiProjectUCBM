@@ -43,7 +43,7 @@ def initialize_parser():
                         nargs='+',
                         default=['Manhattan', 'Queens', 'EWR', 'Bronx', 'Staten Island', 'Brooklyn'])
 
-    parser.add_argument("-o", "--output",
+    parser.add_argument("-i5", "--output",
                         help="The folder for output results",
                         type=str,
                         default='./outdata')
