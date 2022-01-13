@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import sys
 import argparse
 from os import path
+import calendar
 
 
 def initialize_parser():
@@ -90,20 +91,20 @@ def generate_graphs(stats, parser):
         barplot.set_xlabel("BOROUGH", fontsize=10)
         barplot.set_ylabel("AVERAGE DAILY TRIPS", fontsize=10)
         plt.tight_layout()
-        plt.savefig(path.join(parser.output, f"Bar_month-{i}.png"), dpi=300)
+        plt.savefig(path.join(parser.output, f"Bar{i}_{calendar.month_name[i]}_{parser.year}.png"), dpi=300)
 
 
 def save_excel_file(parser, data):
     try:
         data = pd.DataFrame(data)
-        writer = pd.ExcelWriter(path.join(parser.output, f"Statistics_global.xlsx"))
+        writer = pd.ExcelWriter(path.join(parser.output, f"Statistics_Global_{parser.year}.xlsx"))
         datat = data.transpose()
         datat = datat.sort_index(axis=1)
         datat.to_excel(writer, 'GLOBAL STATS')
         writer.save()
         for i in parser.month:
             current_month = data.loc[i, :]
-            writer = pd.ExcelWriter(path.join(parser.output, f"Statistics_of_month-{i}.xlsx"))
+            writer = pd.ExcelWriter(path.join(parser.output, f"Statistics_{calendar.month_name[i]}_{parser.year}.xlsx"))
             current_month.to_excel(writer, 'MONTH STATS')
             writer.save()
 
