@@ -35,7 +35,7 @@ def initialize_parser():
     parser.add_argument("-i3", "--zone",
                         help="The zone_lookup file with information about the Borough",
                         type=str,
-                        default='Specifiche/taxi+_zone_lookup.csv')
+                        default='zone_lookup/taxi+_zone_lookup.csv')
 
     parser.add_argument("-i4", "--borough",
                         help="The zone_lookup file with information about the Borough",

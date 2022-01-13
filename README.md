@@ -17,7 +17,7 @@ Before launching the program you must:
   For example if you put files in the folder 'source' you must execute: python3 main.py 2021 -i1 ./source
   
   
-  -Put taxi+_zone_lookup.csv inside the 'Specifiche' folder, otherwise specify the file path with the -i3 option.
+  -Put taxi+_zone_lookup.csv inside the 'zone_lookup' folder, otherwise specify the file path with the -i3 option.
   For example if you put files in the folder 'source2' you must execute: python3 main.py 2021 -i3 source2/taxi+_zone_lookup.csv
   
   
@@ -59,7 +59,7 @@ The project is structured as follows:
 
    -main.py  -> contains the main script to execute.
    
-   -indata and Specification  -> contains file used to obtain the report unless otherwise indicated in execution
+   -indata and zone_lookup  -> contains file used to obtain the report unless otherwise indicated in execution
    
    -outdata  ->  contains the report's result unless otherwise indicated in execution
 
