@@ -1,5 +1,5 @@
 # auxiliary files that should not be updated on remote repository
-Specifiche/*
+zone_lookup/*
 indata/*
 outdata/*
 .idea

@@ -1,15 +1,16 @@
 """
 Created on Wed Nov 24 11:06:08 2021
-
 @authors: Massimo-Capurro-Llado : Massimo Capurro Llado
-          francescocarpineti091299 : Francesco Carpineti 
+          francescocarpineti091299 : Francesco Carpineti
           Vadilonga00 : Francesca Vadilonga
 """
 
 import pandas as pd
+import matplotlib.pyplot as plt
 import sys
 import argparse
 from os import path
+
 
 
 def initialize_parser():
@@ -33,7 +34,7 @@ def initialize_parser():
     parser.add_argument("-i3", "--zone",
                         help="The zone_lookup file with information about the Borough",
                         type=str,
-                        default='Specifiche/taxi+_zone_lookup.csv')
+                        default='zone_lookup/taxi+_zone_lookup.csv')
 
     parser.add_argument("-i4", "--borough",
                         help="The zone_lookup file with information about the Borough",
@@ -41,7 +42,7 @@ def initialize_parser():
                         nargs='+',
                         default=['Manhattan', 'Queens', 'EWR', 'Bronx', 'Staten Island', 'Brooklyn'])
 
-    parser.add_argument("-o", "--output",
+    parser.add_argument("-i5", "--output",
                         help="The folder for output results",
                         type=str,
                         default='./outdata')
@@ -83,39 +84,8 @@ def generate_graphs(stats, parser):
     stats_df = pd.DataFrame(stats).sort_index()
     for i in parser.month:
         current_month = stats_df.loc[i, :]
-        fig = current_month.plot.bar()
-        fig.figure.savefig(path.join(parser.output, f"Bar_month-{i}.png"))
-
-def SaveExcelFile(parser,data):
-    try:
-        data=pd.DataFrame(data)
-        for i in parser.month:
-            current_month = data.loc[i, :]
-            writer = pd.ExcelWriter(path.join(parser.output, f"Statistics_of_month-{i}.xlsx"))
-            current_month.to_excel(writer, 'USER FEATURES')
-            writer.save()
-
-    except OSError as e:
-        print(e)
-        sys.exit()
-
-
-
-
-
-   # stats_df = pd.DataFrame(stats).sort_index()
-#Possible implementation for drawing pie graphs
-
-# plt.figure(figsize=(15, 15))
-        # plt.style.use('ggplot')
-        # labels = []
-        # sizes = []
-        # explode = (.4, .12, .12, .12, .0, .12)
-        # for x, y in current_month.items():
-        #     labels.append(x)
-        #     sizes.append(y)
-        # # Plot
-        # ax.pie(sizes, labels=labels, explode=explode, pctdistance=0.20, autopct='%.2f %%')
-        # ax.legend(title="Borough:")
-        # fig.savefig(path.join(parser.output, f"pie_Borough-{borough}.png"))
-
+        barplot = current_month.plot(kind='bar', title ="DAILY TAXI TRIPS IN NEW YORK'S BOROUGHS", fontsize=9)
+        barplot.set_xlabel("BOROUGH", fontsize=10)
+        barplot.set_ylabel("AVERAGE DAILY TRIPS", fontsize=10)
+        plt.tight_layout()
+        plt.savefig(path.join(parser.output, f"Bar_month-{i}.png"), dpi=300)
