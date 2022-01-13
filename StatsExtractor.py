@@ -18,7 +18,6 @@ class StatsExtractor(Thread):
 
     def run(self):
         parser, month, file, result = self.queue.get()
-        print('Thread started')
         month_data = Utils.read_csv(file, parser.zone)
         days = Utils.data_cleaner(month_data, parser, month)
         mean_borough_trips = {}

@@ -12,13 +12,12 @@ import argparse
 from os import path
 
 
-
 def initialize_parser():
     parser = argparse.ArgumentParser()
 
     parser.add_argument("year",
-                         help="The year to put under analysis",
-                         type=int)
+                        help="The year to put under analysis",
+                        type=int)
 
     parser.add_argument("-i1", "--path",
                         help="Path of the directory where the files are",
@@ -61,6 +60,7 @@ def read_csv(file, zone):
         print(e)
         sys.exit()
 
+
 # This function creates a dictionary of (key:month, value: name of the month related file)
 
 
@@ -72,32 +72,41 @@ def get_files_list(parser):
     return fileList
 
 
-def data_cleaner(month_data,parser,month):
-    #take the first coloum of month_data dataframe named ['tpep_pickup_datatime']
+def data_cleaner(month_data, parser, month):
+    # take the first coloum of month_data dataframe named ['tpep_pickup_datatime']
     month_data.iloc[:, 0] = pd.to_datetime(month_data.iloc[:, 0], format="%Y/%m/%d %H:%M:%S")
     month_data.dropna(axis=0, how='any')
-    month_data = month_data.loc[(month_data.iloc[:, 0].dt.year == parser.year) & (month_data.iloc[:, 0].dt.month == int(month))]
+    month_data = month_data.loc[
+        (month_data.iloc[:, 0].dt.year == parser.year) & (month_data.iloc[:, 0].dt.month == int(month))]
     days = max(month_data.iloc[:, 0].dt.day)
     return days
+
 
 def generate_graphs(stats, parser):
     stats_df = pd.DataFrame(stats).sort_index()
     for i in parser.month:
         current_month = stats_df.loc[i, :]
-        barplot = current_month.plot(kind='bar', title ="DAILY TAXI TRIPS IN NEW YORK'S BOROUGHS", fontsize=9)
+        barplot = current_month.plot(kind='bar', title="DAILY TAXI TRIPS IN NEW YORK'S BOROUGHS", fontsize=9)
         barplot.set_xlabel("BOROUGH", fontsize=10)
         barplot.set_ylabel("AVERAGE DAILY TRIPS", fontsize=10)
         plt.tight_layout()
         plt.savefig(path.join(parser.output, f"Bar_month-{i}.png"), dpi=300)
 
-def SaveExcelFile(parser,data):
+
+def save_excel_file(parser, data):
     try:
-        data=pd.DataFrame(data)
+        data = pd.DataFrame(data)
+        writer = pd.ExcelWriter(path.join(parser.output, f"Statistics_global.xlsx"))
+        datat = data.transpose()
+        datat = datat.sort_index(axis=1)
+        datat.to_excel(writer, 'GLOBAL STATS')
+        writer.save()
         for i in parser.month:
             current_month = data.loc[i, :]
             writer = pd.ExcelWriter(path.join(parser.output, f"Statistics_of_month-{i}.xlsx"))
-            current_month.to_excel(writer, 'USER FEATURES')
+            current_month.to_excel(writer, 'MONTH STATS')
             writer.save()
+
     except OSError as e:
         print(e)
         sys.exit()
