@@ -86,7 +86,24 @@ def generate_graphs(stats, parser):
         fig = current_month.plot.bar()
         fig.figure.savefig(path.join(parser.output, f"Bar_month-{i}.png"))
 
+def SaveExcelFile(parser,data):
+    try:
+        data=pd.DataFrame(data)
+        for i in parser.month:
+            current_month = data.loc[i, :]
+            writer = pd.ExcelWriter(path.join(parser.output, f"Statistics_of_month-{i}.xlsx"))
+            current_month.to_excel(writer, 'USER FEATURES')
+            writer.save()
 
+    except OSError as e:
+        print(e)
+        sys.exit()
+
+
+
+
+
+   # stats_df = pd.DataFrame(stats).sort_index()
 #Possible implementation for drawing pie graphs
 
 # plt.figure(figsize=(15, 15))
