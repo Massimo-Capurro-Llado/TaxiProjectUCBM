@@ -31,6 +31,6 @@ if __name__ == '__main__':
     file_list = Utils.get_files_list(parser)
     stats_extractor(file_list)
     Utils.generate_graphs(result.result, parser)
-    #TODO salva risultato in excel(Fare funzione EXCEL)
+    Utils.SaveExcelFile(parser,result.result)
     end = time.time()
     print(f'Task executed in : {end-start} s')

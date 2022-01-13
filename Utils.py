@@ -89,3 +89,15 @@ def generate_graphs(stats, parser):
         barplot.set_ylabel("AVERAGE DAILY TRIPS", fontsize=10)
         plt.tight_layout()
         plt.savefig(path.join(parser.output, f"Bar_month-{i}.png"), dpi=300)
+
+def SaveExcelFile(parser,data):
+    try:
+        data=pd.DataFrame(data)
+        for i in parser.month:
+            current_month = data.loc[i, :]
+            writer = pd.ExcelWriter(path.join(parser.output, f"Statistics_of_month-{i}.xlsx"))
+            current_month.to_excel(writer, 'USER FEATURES')
+            writer.save()
+    except OSError as e:
+        print(e)
+        sys.exit()
