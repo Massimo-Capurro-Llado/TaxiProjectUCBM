@@ -45,12 +45,12 @@ To analyze only a few desired months or boroughs (optional):
     
     -This command perform the analysis to the specified year, with specified boroughs including all months.
     
-    python3 main.py 2021 -i4 Manhattan Queens Staten Island
+    python3 main.py 2021 -i4 'Manhattan' 'Queens' 'Staten Island'
     
     
     -This command perform the analysis to the specified year, with specified months and boroughs.
     
-    python3 main.py 2021 -i2 3 6 9 12 -i4 Manhattan Queens Staten Island 
+    python3 main.py 2021 -i2 3 6 9 12 -i4 'Manhattan' 'Queens' 'Staten Island' 
     
 # How to contribute
 
