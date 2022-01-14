@@ -30,7 +30,7 @@ def initialize_parser():
                         help="The months to put under analysis",
                         nargs='+',
                         type=int,
-                        default=[1, 2, 3, 4, 5, 6])
+                        default=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
 
     parser.add_argument("-i3", "--zone",
                         help="The zone_lookup file with information about the Borough",
