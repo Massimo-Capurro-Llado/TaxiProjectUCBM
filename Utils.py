@@ -29,7 +29,7 @@ def initialize_parser():
     parser.add_argument("-i2", "--month",
                         help="The months to put under analysis",
                         nargs='+',
-                        type=str,
+                        type=int,
                         default=[1, 2, 3, 4, 5, 6])
 
     parser.add_argument("-i3", "--zone",
