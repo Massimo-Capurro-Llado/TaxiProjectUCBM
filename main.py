@@ -37,7 +37,7 @@ if __name__ == '__main__':
     print(f"Starting the analysis at: {datetime.fromtimestamp(start)}\n")
 
     parser = Utils.initialize_parser()
-    Utils.create_output_directory()
+    Utils.create_output_directory(parser)
     result = Result()
 
     file_list = Utils.get_files_list(parser)
