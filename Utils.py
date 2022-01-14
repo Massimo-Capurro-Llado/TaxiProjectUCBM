@@ -87,7 +87,7 @@ def generate_graphs(stats, parser):
     stats_df = pd.DataFrame(stats).sort_index()
     for i in parser.month:
         current_month = stats_df.loc[i, :]
-        barplot = current_month.plot(kind='bar', title="DAILY TAXI TRIPS IN NEW YORK'S BOROUGHS", fontsize=9)
+        barplot = current_month.plot(kind='bar', title="DAILY TAXI TRIPS IN NEW YORK'S BOROUGHS", fontsize=10)
         barplot.set_xlabel("BOROUGH", fontsize=10)
         barplot.set_ylabel("AVERAGE DAILY TRIPS", fontsize=10)
         plt.tight_layout()
@@ -100,6 +100,8 @@ def save_excel_file(parser, data):
         writer = pd.ExcelWriter(path.join(parser.output, f"Statistics_Global_{parser.year}.xlsx"))
         datat = data.transpose()
         datat = datat.sort_index(axis=1)
+        col_names = [calendar.month_name[i] for i in datat.columns]
+        datat.columns = col_names
         datat.to_excel(writer, 'GLOBAL STATS')
         writer.save()
         for i in parser.month:
