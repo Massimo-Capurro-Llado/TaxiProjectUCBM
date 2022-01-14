@@ -37,11 +37,13 @@ if __name__ == '__main__':
     print(f"Starting the analysis at: {datetime.fromtimestamp(start)}\n")
 
     parser = Utils.initialize_parser()
+    Utils.create_output_directory()
     result = Result()
 
     file_list = Utils.get_files_list(parser)
     stats_extractor(file_list)
     Utils.generate_graphs(result.result, parser)
     Utils.save_excel_file(parser, result.result)
+
     end = time.time()
     print(f'Task executed in : {end - start} s')

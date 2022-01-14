@@ -9,6 +9,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import sys
 import argparse
+import os
 from os import path
 import calendar
 
@@ -113,3 +114,12 @@ def save_excel_file(parser, data):
     except OSError as e:
         print(e)
         sys.exit()
+
+
+def create_output_directory():
+    out = './outdata'
+    exist = os.path.exists(out)
+
+    if not exist:
+        os.makedirs(out)
+        print("Created a folder named outdata in the project folder. There you will find all your results")
